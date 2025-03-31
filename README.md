@@ -22,11 +22,9 @@ link to their contributions in all repos here. -->
 | Name                            | Responsible for | Link to their commits in this repo |
 |---------------------------------|-----------------|------------------------------------|
 | All team members                |                 |                                    |
-| Team member 1                   |                 |                                    |
-| Team member 2                   |                 |                                    |
-| Team member 3                   |                 |                                    |
-| Team member 4 (if there is one) |                 |                                    |
-
+| Haris Naveed                    |                 |                                    |
+| Ariel Haberman                  |                 |                                    |
+| Musonda Sinkala                 |                 |                                    |
 
 
 ### System diagram
