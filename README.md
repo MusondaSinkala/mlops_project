@@ -36,7 +36,8 @@ By focusing on future projections, this system enhances decision-making for new 
 |----------------------------------------------------------------------------------------|
 | Name                            | Responsible for | Link to their commits in this repo |
 |---------------------------------|-----------------|------------------------------------|
-| All team members                | Unit 3, value proposition, business metrics,         |                                 | Haris Naveed                    | Units 4 & 5     |                                    |
+| All team members                | Unit 3, value proposition, business metrics,         |
+| Haris Naveed                    | Units 4 & 5     |                                    |
 | Ariel Haberman                  | Units 6 & 7     |                                    |
 | Musonda Sinkala                 | Unit 8          |                                    |
 |----------------------------------------------------------------------------------------|
@@ -63,11 +64,17 @@ By focusing on future projections, this system enhances decision-making for new 
 |--------------------------------------------------------------------------------|
 
 *1 = https://streeteasy.com/blog/data-dashboard/
-*2 = https://data.cityofnewyork.us/Education/2017-18-2021-22-Demographic-Snapshot/c7ru-d68s/about_data
+
+*2 = https://data.cityofnewyork.us/Education/2017-18-2021-22-Demographic-Snapshot/c7ru-d68s/about_data 
+
 *3 = https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95/about_data
+
 *4 = https://data.cityofnewyork.us/Public-Safety/NYPD-Shooting-Incident-Data-Year-To-Date-/5ucz-vwe8/data_preview
+
 *5 = https://data.cityofnewyork.us/Recreation/Parks-Properties/enfh-gkve/about_data
+
 *6 = https://github.com/alysedelaney/how-nyc-eats/tree/main/data/yelp
+
 *7 = https://s3.amazonaws.com/tripdata/index.html
 
 ### Summary of infrastructure requirements
