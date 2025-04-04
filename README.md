@@ -8,9 +8,11 @@ We will leverage time series models to project neighborhood-relevant trends, hel
 To improve decision-making, our system will include:
 
 #### Time Series Forecasting for Key Neighborhood Metrics:
-Rent Trends: Predicting future rental prices to help users gauge affordability over time.
-Demographic Shifts: Forecasting changes in demographic distributions to provide insights into neighborhood evolution.
-Safety Trends: Predicting trends in vehicle collisions and shootings to assess the potential long-term safety of an area.
+**Rent Trends:** Predicting future rental prices to help users gauge affordability over time.
+
+**Demographic Shifts:** Forecasting changes in demographic distributions to provide insights into neighborhood evolution.
+
+**Safety Trends:** Predicting trends in vehicle collisions and shootings to assess the potential long-term safety of an area.
 
 
 #### CitiBike Accessibility Clustering:
@@ -29,7 +31,9 @@ Our system provides a data-driven, forward-looking alternative, enabling users t
 
 ### Business Metrics for Success:
 **User satisfaction:** Measured by follow-up surveys asking users if they found the system useful.
+
 **User Retention:** Measuring number of returning users.
+
 **Model Performance:** Forecasting accuracy of rent, safety, and demographic trends, calculated by comparing it to the real data as it becomes available.
 
 
@@ -100,7 +104,7 @@ Our project follows a cloud-native (Unit 3) approach using Git to automate provi
 Unit 4:
 |Req             | How we will satisfy it                                                   |
 |----------------|--------------------------------------------------------------------------|
-|Train & retrain | Train time-series models on NYC data; re-train safety models once a week |
+|Train & retrain | Train time-series models on NYC OpenData and StreetEasy; re-train safety models once a week |
 |Modelling       | Choose models based on interpretability, and forecasting accuracy.       |
 
 
@@ -110,12 +114,12 @@ Unit 5:
 |-----------|--------------------------------------------------------------------------------|
 |Experiment <br> tracking | Host MLflow on Chameleon to log all training runs, hyperparameters, and metrics|
 |Scheduling <br> training| Deploy Ray cluster on Chameleon; submit training jobs via Ray                  |
-|Ray train  | Will use Ray Train’s TorchTrainer for fault tolerance                          |
+|Ray train  | Will use Ray Train’s TorchTrainer for fault tolerance (if we decide to use an RNN)                          |
 
 
 #### Model serving and monitoring platforms
 
-We will be integrating our smaller models into one forcast. The projections outputted by this system will then be served to the user at a single API endpoint. We plan on exploring several model optimization techniques like graph optimizations and reduced precision but avoiding ones that require specific hardware backends. For system level required concurrency we plan on trying FastAPI and/or using dynamic batching for regulation. We plan on evaluating our models before joining them together to form the main forecasting system. While we will perform sanity checks on the forecasts is no ground truth so most evaluation will be done on the time series models. We will use canary testing to first open our service just to students moving to NYC before the service is open to the general public. Users will be able to leave feedback about if they thought the projections make sense and align with what they think of neighborhoods.  
+We will be integrating our smaller models into one forcast. The projections output by this system will then be served to the user at a single API endpoint. We plan on exploring several model optimization techniques like graph optimizations and reduced precision but avoiding ones that require specific hardware backends. For system level required concurrency we plan on trying FastAPI and/or using dynamic batching for regulation. We plan on evaluating our models before joining them together to form the main forecasting system. While we will perform sanity checks on the forecasts is no ground truth so most evaluation will be done on the time series models. We will use canary testing to first open our service just to students moving to NYC before the service is open to the general public. Users will be able to leave feedback about if they thought the projections make sense and align with what they think of neighborhoods.  
 
 #### Data pipeline
 
