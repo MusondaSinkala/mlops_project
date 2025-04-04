@@ -25,8 +25,10 @@ Since New York's infrastructure evolves slowly, we think these forecasting model
 Current Approach: People rely on Reddit, personal recommendations, or scattered online sources. These methods are subjective, inconsistent, and do not account for future trends.
 
 
-### ML Advantage: 
-Our system provides a data-driven, forward-looking alternative, enabling users to make more strategic, long-term decisions about where to live.
+### System Functionality: 
+The system will initially ask users to select what's important to them. The initial system will let people choose between prioritising parks vs restaurants, and will then suggest several neighborhoods based on what was selected. 
+This is done by manually labelling neighborhoods either park-focused or dining-focused based on the number of parks/high quality restaurants based in them. 
+From there, we move to predicting how the safety, demographic, and rental landscape of the neighborhood will change over a user-specified time horizon.
 
 
 ### Business Metrics for Success:
