@@ -105,26 +105,25 @@ Our project follows a cloud-native (Unit 3) approach using Git to automate provi
 #### Model training and training platforms
 
 Unit 4:
-|-------------------------------------------------------------------------------------------|
 |Req             | How we will satisfy it                                                   |
 |----------------|--------------------------------------------------------------------------|
 |Train & retrain | Train time-series models on NYC data; re-train safety models once a week |
 |----------------|--------------------------------------------------------------------------|
 |Modelling       | Choose models based on interpretability, and forecasting accuracy.       |
-|-------------------------------------------------------------------------------------------|
+
 
 Unit 5:
-|-------------------------------------------------------------------------------------------|
-|Req        | How we will satisfy it                                                        |
-|-----------|-------------------------------------------------------------------------------|
-|Experiment | Host MLflow on Chameleon to log all training runs, hyperparameters, andmetrics|
-|tracking                                                                                   |
-|-----------|-------------------------------------------------------------------------------|
-|Scheduling | Deploy Ray cluster on Chameleon; submit training jobs via Ray                 |
-|training                                                                                   |
-|-----------|-------------------------------------------------------------------------------|
-|Ray train  | Will use Ray Train’s TorchTrainer for fault tolerance                         |
-|-------------------------------------------------------------------------------------------|
+
+|Req        | How we will satisfy it                                                         |
+|-----------|--------------------------------------------------------------------------------|
+|Experiment | Host MLflow on Chameleon to log all training runs, hyperparameters, and metrics|
+|tracking   |                                                                                |
+|           |                                                                                |
+|Scheduling | Deploy Ray cluster on Chameleon; submit training jobs via Ray                  |
+|training   |                                                                                |
+|           |                                                                                |
+|Ray train  | Will use Ray Train’s TorchTrainer for fault tolerance                          |
+
 
 #### Model serving and monitoring platforms
 
