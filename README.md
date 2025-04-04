@@ -61,7 +61,7 @@ By focusing on future projections, this system enhances decision-making for new 
 | Model 1: Arima    | n/a                | n/a               | n/a               |
 | Model 2: K Means  | n/a                | n/a               | n/a               |
 | Model 3: RNN      | n/a                | n/a               | n/a               |
-|--------------------------------------------------------------------------------|
+
 
 *1 = https://streeteasy.com/blog/data-dashboard/
 
@@ -81,9 +81,9 @@ By focusing on future projections, this system enhances decision-making for new 
 
 |-------------------------------------------------------------------------------------------|
 | Requirement     | How many/when                 | Justification                           |
-|-----------------|-------------------------------------------------------------------------|
+|-----------------|-------------------------------|-----------------------------------------|
 | `m1.medium` VMs | 3 for entire project duration | One for model training, one for model   |
-|                 |                               | serving and the last for the dashboard  |
+|                                                  serving and the last for the dashboard   |
 |-------------------------------------------------------------------------------------------|
 |                 |                               | We might use an RNN for the time series |
 | 2 A100 GPUs     | 3 hour block twice a week     | data and would need to GPU to speed up  |
