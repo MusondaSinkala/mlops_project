@@ -33,14 +33,12 @@ By focusing on future projections, this system enhances decision-making for new 
 
 ### Contributors
 
-|----------------------------------------------------------------------------------------|
 | Name                            | Responsible for | Link to their commits in this repo |
 |---------------------------------|-----------------|------------------------------------|
 | All team members                | Unit 3, value proposition, business metrics,         |
 | Haris Naveed                    | Units 4 & 5     |                                    |
 | Ariel Haberman                  | Units 6 & 7     |                                    |
 | Musonda Sinkala                 | Unit 8          |                                    |
-|----------------------------------------------------------------------------------------|
 
 ### System diagram
 
@@ -48,7 +46,6 @@ By focusing on future projections, this system enhances decision-making for new 
 
 ### Summary of outside materials
 
-|--------------------------------------------------------------------------------|
 | Dataset           | How it was created | Conditions of use | Link              |
 |-------------------|--------------------|-------------------|-------------------|
 | Average Rent      | StreetEasy Data    | n/a               | *1 below          |
@@ -79,23 +76,14 @@ By focusing on future projections, this system enhances decision-making for new 
 
 ### Summary of infrastructure requirements
 
-|-------------------------------------------------------------------------------------------|
+
 | Requirement     | How many/when                 | Justification                           |
 |-----------------|-------------------------------|-----------------------------------------|
-| `m1.medium` VMs | 3 for entire project duration | One for model training, one for model   |
-|                                                  serving and the last for the dashboard   |
-|-----------------|-------------------------------|-----------------------------------------|
-|                 |                               | We might use an RNN for the time series |
-| 2 A100 GPUs       3 hour block twice a week       data and would need to GPU to speed up  |
-|                                                   training                                |
-|-----------------|-------------------------------|-----------------------------------------|
-|                 | 1 for entire project duration,| We need a floating IP so the VM can     |
-| Floating IPs      1 for sporadic use              communicate with our persistent storage |
-|                                                   as well as for training and serving     |
-|-----------------|-------------------------------|-----------------------------------------|                 
-|Persistent       | Unclear as of now             | For model, data and artifact storage for|
-|Storage                                            the project duration                    |
-|-------------------------------------------------------------------------------------------|
+| `m1.medium` VMs | 3 for entire project duration | One for model training, one for model <br> serving and the last for the dashboard                       
+| 2 A100 GPUs   | 3 hour block twice a week  | We might use an RNN for the time series <br> data and would need to GPU to speed up <br>  training
+| Floating IPs    | 1 for entire project duration,<br>  1 for sporadic use | We need a floating IP so the VM can <br> communicate with our persistent storage <br>  as well as for training and serving <br>   |          
+|Persistent <br> Storage | Unclear as of now  | For model, data and artifact storage for <br>  the project duration |
+
 
 ### Detailed design plan
 
@@ -126,38 +114,25 @@ We will be integrating our smaller models into one forcast. The projections outp
 
 #### Data pipeline
 
-|-------------------------------------------------------------------------------------------|
+
 |Req       | How we will satisfy it                                                         |
 |----------|--------------------------------------------------------------------------------|
-|Persistent| Chameleon persistent storage for models and artefacts, container images, data  |
-|Storage                                                                                    |
-|----------|--------------------------------------------------------------------------------|
-|Offline   | Structured storage of the data described in csv files object store.            |
-|data                                                                                       |
-|----------|--------------------------------------------------------------------------------|
-|Data      | Automated data pipeline Airflow for ingestion, transformation, and storage.    |
-|Pipeline                                                                                   |
-|----------|--------------------------------------------------------------------------------|
-|Online    | Real time ingestion of shooting and collision data as these are updated daily  |
-|data                                                                                       |
-|-------------------------------------------------------------------------------------------|
+|Persistent <br> Storage| Chameleon persistent storage for models and artefacts, container images, data  |
+|Offline <br> data| Structured storage of the data described in csv files object store.            |
+|Data <br> Pipeline| Automated data pipeline Airflow for ingestion, transformation, and storage.    |
+|Online <br> data  | Real time ingestion of shooting and collision data as these are updated daily  |
 
 We will be attempting the difficulty question for unit 8, i.e., implement an interactive and comprehensive data dashboard, that members of the team can use to get high-level insight into the data and data quality.
 
 #### Continuous X
 
-|-------------------------------------------------------------------------------------------|
+
 |Requirement    | How we will satisfy it                                                    |
 |---------------|---------------------------------------------------------------------------|
-|Infrastructure | Define infrastructure requirements in yml files stored on Git instead of  |
-|   as code       relying on ClickOps                                                       |
-|---------------|---------------------------------------------------------------------------|
+|Infrastructure <br> as code | Define infrastructure requirements in yml files stored on Git instead of <br>  relying on ClickOps |
 |Cloud-native   | Use immutable infrastructure, microservices, and containerized workloads  |
-|---------------|---------------------------------------------------------------------------|
 |CI/CD          | Automated pipeline for retraining, testing, optimization, and deployment  |
-|---------------|---------------------------------------------------------------------------|
 |Deployment     | Deploy to production with monitoring and auto-rollback mechanisms         |
-|-------------------------------------------------------------------------------------------|
 
 
 
