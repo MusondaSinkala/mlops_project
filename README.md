@@ -84,17 +84,17 @@ By focusing on future projections, this system enhances decision-making for new 
 |-----------------|-------------------------------|-----------------------------------------|
 | `m1.medium` VMs | 3 for entire project duration | One for model training, one for model   |
 |                                                  serving and the last for the dashboard   |
-|-------------------------------------------------------------------------------------------|
+|-----------------|-------------------------------|-----------------------------------------|
 |                 |                               | We might use an RNN for the time series |
-| 2 A100 GPUs     | 3 hour block twice a week     | data and would need to GPU to speed up  |
-|                 |                               | training                                |
-|-------------------------------------------------------------------------------------------|
+| 2 A100 GPUs       3 hour block twice a week       data and would need to GPU to speed up  |
+|                                                   training                                |
+|-----------------|-------------------------------|-----------------------------------------|
 |                 | 1 for entire project duration,| We need a floating IP so the VM can     |
-| Floating IPs    | 1 for sporadic use            | communicate with our persistent storage |
-|                 |                               | as well as for training and serving     |
-|-------------------------------------------------------------------------------------------|                 
+| Floating IPs      1 for sporadic use              communicate with our persistent storage |
+|                                                   as well as for training and serving     |
+|-----------------|-------------------------------|-----------------------------------------|                 
 |Persistent       | Unclear as of now             | For model, data and artifact storage for|
-|Storage          |                               | the project duration                    |
+|Storage                                            the project duration                    |
 |-------------------------------------------------------------------------------------------|
 
 ### Detailed design plan
@@ -118,12 +118,12 @@ Unit 5:
 |Req        | How we will satisfy it                                                        |
 |-----------|-------------------------------------------------------------------------------|
 |Experiment | Host MLflow on Chameleon to log all training runs, hyperparameters, andmetrics|
-|tracking   |                                                                               |
+|tracking                                                                                   |
 |-----------|-------------------------------------------------------------------------------|
 |Scheduling | Deploy Ray cluster on Chameleon; submit training jobs via Ray                 |
-|training   |                                                                               |
+|training                                                                                   |
 |-----------|-------------------------------------------------------------------------------|
-|Ray train | Will use Ray Train’s TorchTrainer for fault tolerance                          |
+|Ray train  | Will use Ray Train’s TorchTrainer for fault tolerance                         |
 |-------------------------------------------------------------------------------------------|
 
 #### Model serving and monitoring platforms
@@ -136,16 +136,16 @@ We will be integrating our smaller models into one forcast. The projections outp
 |Req       | How we will satisfy it                                                         |
 |----------|--------------------------------------------------------------------------------|
 |Persistent| Chameleon persistent storage for models and artefacts, container images, data  |
-|Storage   |                                                                                |
+|Storage                                                                                    |
 |----------|--------------------------------------------------------------------------------|
 |Offline   | Structured storage of the data described in csv files object store.            |
-|data      |                                                                                |
+|data                                                                                       |
 |----------|--------------------------------------------------------------------------------|
 |Data      | Automated data pipeline Airflow for ingestion, transformation, and storage.    |
-|Pipeline  |                                                                                |
+|Pipeline                                                                                   |
 |----------|--------------------------------------------------------------------------------|
 |Online    | Real time ingestion of shooting and collision data as these are updated daily  |
-|data      |                                                                                |
+|data                                                                                       |
 |-------------------------------------------------------------------------------------------|
 
 We will be attempting the difficulty question for unit 8, i.e., implement an interactive and comprehensive data dashboard, that members of the team can use to get high-level insight into the data and data quality.
@@ -156,7 +156,7 @@ We will be attempting the difficulty question for unit 8, i.e., implement an int
 |Requirement    | How we will satisfy it                                                    |
 |---------------|---------------------------------------------------------------------------|
 |Infrastructure | Define infrastructure requirements in yml files stored on Git instead of  |
-|   as code     | relying on ClickOps                                                       |
+|   as code       relying on ClickOps                                                       |
 |---------------|---------------------------------------------------------------------------|
 |Cloud-native   | Use immutable infrastructure, microservices, and containerized workloads  |
 |---------------|---------------------------------------------------------------------------|
