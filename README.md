@@ -42,6 +42,7 @@ By focusing on future projections, this system enhances decision-making for new 
 
 ### System diagram
 
+![System Diagram](https://github.com/HarisNaveed17/mlops_project/blob/main/MLOps%20Sys%20Design.png?raw=true)
 
 
 ### Summary of outside materials
