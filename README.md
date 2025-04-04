@@ -30,6 +30,10 @@ The system will initially ask users to select what's important to them. The init
 This is done by manually labelling neighborhoods either park-focused or dining-focused based on the number of parks/high quality restaurants based in them. 
 From there, we move to predicting how the safety, demographic, and rental landscape of the neighborhood will change over a user-specified time horizon.
 
+In this way, our system is more data-driven and reliable than the current way people understand neighborhoods. It's also important to note that people
+already rely on similar systems to judge some aspects like safety ![Crime Map NYC](https://www.arcgis.com/apps/instant/sidebar/index.html?appid=8153f961507040de8dbf9a53145f18c4). Our system can be seen as 
+expanding this method to other aspects that make a neighborhood livable.
+
 
 ### Business Metrics for Success:
 **User satisfaction:** Measured by follow-up surveys asking users if they found the system useful.
