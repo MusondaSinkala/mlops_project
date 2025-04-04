@@ -1,32 +1,36 @@
 
 ## Identifying neighborhood trends using NYC OpenData
 
-Value Proposition:
+### Value Proposition:
 When people move to New York, they often struggle to determine which neighborhood best suits their needs. They typically rely on forums like Reddit or word-of-mouth, which can be subjective, inconsistent, and time-consuming. Our project proposes a machine learning system that provides insights into the long-term appeal of different neighborhoods for people that are navigating the apartment hunt process.
 We will leverage time series models to project neighborhood-relevant trends, helping users make informed decisions about where to live based on future conditions rather than just the present snapshot.
 
 To improve decision-making, our system will include:
-Time Series Forecasting for Key Neighborhood Metrics:
+
+#### Time Series Forecasting for Key Neighborhood Metrics:
 Rent Trends: Predicting future rental prices to help users gauge affordability over time.
 Demographic Shifts: Forecasting changes in demographic distributions to provide insights into neighborhood evolution.
 Safety Trends: Predicting trends in vehicle collisions and shootings to assess the potential long-term safety of an area.
 
 
-CitiBike Accessibility Clustering:
+#### CitiBike Accessibility Clustering:
 Using a clustering model to identify neighborhoods with high CitiBike accessibility, using the number of CitiBike stations as a proxy for CitiBike infrastructure.
 
 
-Status Quo & Business Metric:
+Since New York's infrastructure evolves slowly, we think these forecasting models, combined with the latest data from the OpenData API will yield reliable predictions.
+
+### Status Quo & Business Metric:
 Current Approach: People rely on Reddit, personal recommendations, or scattered online sources. These methods are subjective, inconsistent, and do not account for future trends.
 
 
-ML Advantage: Our system provides a data-driven, forward-looking alternative, enabling users to make more strategic, long-term decisions about where to live.
+### ML Advantage: 
+Our system provides a data-driven, forward-looking alternative, enabling users to make more strategic, long-term decisions about where to live.
 
 
-Business Metrics for Success:
-User satisfaction: Measured by follow-up surveys asking users if they found the system useful.
-User Retention: How often people return to the tool for future searches.
-Model Performance: Forecasting accuracy of rent, safety, and demographic trends.
+### Business Metrics for Success:
+**User satisfaction:** Measured by follow-up surveys asking users if they found the system useful.
+**User Retention:** Measuring number of returning users.
+**Model Performance:** Forecasting accuracy of rent, safety, and demographic trends, calculated by comparing it to the real data as it becomes available.
 
 
 By focusing on future projections, this system enhances decision-making for new residents while improving efficiency compared to the status quo.
@@ -56,7 +60,7 @@ By focusing on future projections, this system enhances decision-making for new 
 | Parks Data        | NYC Open Data      | n/a               | *5 below          |
 | Restaurant Data   | Public Github      | n/a               | *6 below          |
 | CitiBike Data     | Citibike Website   | n/a               | *7 below          |
-| Model 1: Arima    | n/a                | n/a               | n/a               |
+| Model 1: ARIMA    | n/a                | n/a               | n/a               |
 | Model 2: K Means  | n/a                | n/a               | n/a               |
 | Model 3: RNN      | n/a                | n/a               | n/a               |
 
