@@ -43,8 +43,6 @@ expanding this method to other aspects that make a neighborhood livable.
 **Model Performance:** Forecasting accuracy of localized marginal energy prices, calculated by comparing it to the real data as it becomes available.
 
 
-By focusing on future projections, this system enhances decision-making for new residents while improving efficiency compared to the status quo.
-
 ### Contributors
 
 | Name                            | Responsible for | Link to their commits in this repo |
