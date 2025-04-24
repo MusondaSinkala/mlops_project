@@ -81,7 +81,7 @@ expanding this method to other aspects that make a neighborhood livable.
 
 *1 = https://www.gridstatus.io/datasets
 
-This contains 272 individual datasets including ISONE LMP Real Time 5 Min Final which updates every five minutes and has ~330,000,000 rows and ERCOT LMP By Settlement Point which updates frequently and has ~930,000,000 rows. These will be the main datasets used in our project.
+This contains 272 individual datasets including ISONE (New England energy grid) LMP (locational marginal pricing) Real Time 5 Min Final which updates every five minutes and has ~330,000,000 rows and ERCOT (Texas energy grid) LMP By Settlement Point which updates frequently and has ~930,000,000 rows. These will be the main datasets used in our project. 
 
 *2 = https://developer.nationaltransport.ie/api-details#api=gtfsr&operation=TripUpdates
 
