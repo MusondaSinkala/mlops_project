@@ -63,31 +63,15 @@ By focusing on future projections, this system enhances decision-making for new 
 
 | Dataset           | How it was created | Conditions of use | Link              |
 |-------------------|--------------------|-------------------|-------------------|
-| Average Rent      | StreetEasy Data    | n/a               | *1 below          |
-| Demographics      | NYC Open Data      | n/a               | *2 below          |
-| Collisions Data   | NYC Open Data      | n/a               | *3 below          |
-| Shootings Data    | NYC Open Data      | n/a               | *4 below          |
-| Parks Data        | NYC Open Data      | n/a               | *5 below          |
-| Restaurant Data   | Public Github      | n/a               | *6 below          |
-| CitiBike Data     | Citibike Website   | n/a               | *7 below          |
-| Model 1: ARIMA    | n/a                | n/a               | n/a               |
-| Model 2: K Means  | n/a                | n/a               | n/a               |
-| Model 3: RNN      | n/a                | n/a               | n/a               |
+| US Energy         | Grid Status        | n/a               | *1 below          |
+| Irish Public Transit      | Dublin Bus, Bus Éireann, and Go-Ahead Ireland    | n/a               | *2 below          |
+| Satellite Positions   | N2YO Ham Radio      | n/a               | *3 below          |
 
+*1 = https://www.gridstatus.io/datasets
 
-*1 = https://streeteasy.com/blog/data-dashboard/
+*2 = https://developer.nationaltransport.ie/api-details#api=gtfsr&operation=TripUpdates
 
-*2 = https://data.cityofnewyork.us/Education/2017-18-2021-22-Demographic-Snapshot/c7ru-d68s/about_data 
-
-*3 = https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95/about_data
-
-*4 = https://data.cityofnewyork.us/Public-Safety/NYPD-Shooting-Incident-Data-Year-To-Date-/5ucz-vwe8/data_preview
-
-*5 = https://data.cityofnewyork.us/Recreation/Parks-Properties/enfh-gkve/about_data
-
-*6 = https://github.com/alysedelaney/how-nyc-eats/tree/main/data/yelp
-
-*7 = https://s3.amazonaws.com/tripdata/index.html
+*3 = https://www.n2yo.com/api/
 
 ### Summary of infrastructure requirements
 
