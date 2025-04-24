@@ -1,9 +1,23 @@
 
-## Identifying neighborhood trends using NYC OpenData
+## Building a More Flexible Time-Series Forecaster
 
 ### Value Proposition:
-When people move to New York, they often struggle to determine which neighborhood best suits their needs. They typically rely on forums like Reddit or word-of-mouth, which can be subjective, inconsistent, and time-consuming. Our project proposes a machine learning system that provides insights into the long-term appeal of different neighborhoods for people that are navigating the apartment hunt process.
-We will leverage time series models to project neighborhood-relevant trends, helping users make informed decisions about where to live based on future conditions rather than just the present snapshot.
+Forecasting demand is a crucial part of many businesses, government departments and non-profits. Improving the accuracy, robustness and reliability of forecasting models is an open-problem. While not as popular as natural language processing, generative models have been developed exclusively for improving time-series forecasting performance. Forecast accuracy benefits top-line, bottom-line, and asset utilization performance. By accurately predicting demand, companies can increase short-term sales by minimizing stock-outs. Over time, as they develop a track record for meeting customer commitments, they improve customer satisfaction, leading to increased market share, improved loyalty, and greater pricing power.
+
+
+
+### Present Solution:
+There are many B2B platforms that provide businesses with time-series forecasting tools. One such platform provider is [Nixtla](https://www.nixtla.io/), which claims to democratize time-series analysis by eliminating the need for model training and making predictions available for millions of time-series in seconds. They do this by providing API access to a model called TimeGPT, which is trained on millions of time-series of financial, weather, energy, and web data. 
+
+However, [research](https://arxiv.org/html/2412.09880v1) has shown that smaller foundational models fine-tuned on specific datasets perform much better than large, "general-purpose" models. One such model is Google's TimesFM model, a 200M parameter, decoder only foundational model (also mentioned in the research paper above). 
+
+
+### Proposed System
+Nixtla's TimeGPT is closed source and their commercial platform currently does not provide users with the ability to finetune the model, although this is available through their developer APIs. They similarly do not provide infrastructure to schedule finetuning on real-time, streaming data at fixed intervals. 
+
+Our solution is to build a platform using the open-source TimesFM model that allows users to fine-tune the foundational model on their own datasets, set up systems to continuously fine-tune the model on new, incoming data, all while interacting with a user-friendly interface.
+
+This system could become part of Nixtla, while they have a paid, closed-source model, incorporating open-source models with propriety infrastructure could attract more power users to the company. Note that, according to the TimesFM [paper](https://arxiv.org/pdf/2310.10688), it's already beating state of the art time-serires model.
 
 To improve decision-making, our system will include:
 
