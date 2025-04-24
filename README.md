@@ -69,6 +69,7 @@ By focusing on future projections, this system enhances decision-making for new 
 
 *1 = https://www.gridstatus.io/datasets
 
+This cointains 272 individual datasets including ISONE LMP Real Time 5 Min Final which updates every five minutes and has ~330,000,000 rows and EIA BA Interchange Hourly which updates hourly and has ~29,000,000 rows.
 *2 = https://developer.nationaltransport.ie/api-details#api=gtfsr&operation=TripUpdates
 
 *3 = https://www.n2yo.com/api/
