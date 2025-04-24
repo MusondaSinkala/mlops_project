@@ -40,7 +40,7 @@ expanding this method to other aspects that make a neighborhood livable.
 
 **User Retention:** Measuring number of returning users.
 
-**Model Performance:** Forecasting accuracy of rent, safety, and demographic trends, calculated by comparing it to the real data as it becomes available.
+**Model Performance:** Forecasting accuracy of localized marginal energy prices, calculated by comparing it to the real data as it becomes available.
 
 
 By focusing on future projections, this system enhances decision-making for new residents while improving efficiency compared to the status quo.
@@ -69,7 +69,8 @@ By focusing on future projections, this system enhances decision-making for new 
 
 *1 = https://www.gridstatus.io/datasets
 
-This cointains 272 individual datasets including ISONE LMP Real Time 5 Min Final which updates every five minutes and has ~330,000,000 rows and EIA BA Interchange Hourly which updates hourly and has ~29,000,000 rows.
+This contains 272 individual datasets including ISONE LMP Real Time 5 Min Final which updates every five minutes and has ~330,000,000 rows and ERCOT LMP By Settlement Point which updates frequently and has ~930,000,000 rows. These will be the main datasets used in our project.
+
 *2 = https://developer.nationaltransport.ie/api-details#api=gtfsr&operation=TripUpdates
 
 *3 = https://www.n2yo.com/api/
@@ -87,7 +88,7 @@ This cointains 272 individual datasets including ISONE LMP Real Time 5 Min Final
 
 ### Detailed design plan
 
-Our project follows a cloud-native (Unit 3) approach using Git to automate provisioning and deployment. Microservices are containerized in Docker and served through Kubernetes for scalability and fault tolerance. The CI/CD pipeline automates model retraining and logs results with MLflow (Unit 5). An ETL pipeline ingests data from NYC Open Data, processes it through data cleaning and transformation steps, and loads it into the data repository for training and inference. Offline data (Unit 8) is stored persistently using Chameleon resources, streaming pipelines (Unit 8) handle real-time updates. Persistent storage (Unit 8) will be used to ensure that trained models, logs, and artifacts persist beyond individual runs. Distributed training is accelerated using Ray Train (Unit 5), with hyperparameter tuning handled by Ray Tune for optimal performance (Unit 5). The infrastructure will ensure fast retraining, scalable deployment, and continuous optimization.
+Our project follows a cloud-native (Unit 3) approach using Git to automate provisioning and deployment. Microservices are containerized in Docker and served through Kubernetes for scalability and fault tolerance. The CI/CD pipeline automates model retraining and logs results with MLflow (Unit 5). An ETL pipeline ingests data from the US grid data (and can work on other sources) , processes it through data cleaning and transformation steps, and loads it into the data repository for training and inference. Offline data (Unit 8) is stored persistently using Chameleon resources, streaming pipelines (Unit 8) handle real-time updates. Persistent storage (Unit 8) will be used to ensure that trained models, logs, and artifacts persist beyond individual runs. Distributed training is accelerated using Ray Train (Unit 5), with hyperparameter tuning handled by Ray Tune for optimal performance (Unit 5). The infrastructure will ensure fast retraining, scalable deployment, and continuous optimization.
  
 
 #### Model training and training platforms
@@ -95,7 +96,7 @@ Our project follows a cloud-native (Unit 3) approach using Git to automate provi
 Unit 4:
 |Req             | How we will satisfy it                                                   |
 |----------------|--------------------------------------------------------------------------|
-|Train & retrain | Train time-series models on NYC OpenData and StreetEasy; re-train safety models once a week |
+|Train & retrain | Train time-series models on US power grid data |
 |Modelling       | Choose models based on interpretability, and forecasting accuracy.       |
 
 
@@ -110,7 +111,7 @@ Unit 5:
 
 #### Model serving and monitoring platforms
 
-We will be integrating our smaller models into one forcast. The projections output by this system will then be served to the user at a single API endpoint. We plan on exploring several model optimization techniques like graph optimizations and reduced precision but avoiding ones that require specific hardware backends. For system level required concurrency we plan on trying FastAPI and/or using dynamic batching for regulation. We plan on evaluating our models before joining them together to form the main forecasting system. While we will perform sanity checks on the forecasts is no ground truth so most evaluation will be done on the time series models. We will use canary testing to first open our service just to students moving to NYC before the service is open to the general public. Users will be able to leave feedback about if they thought the projections make sense and align with what they think of neighborhoods.  
+This project will be focusing on training on large time model. The projections output by this system will then be served to the user at a single API endpoint. We plan on exploring several model optimization techniques like graph optimizations and reduced precision but avoiding ones that require specific hardware backends. For system level required concurrency we plan on trying FastAPI and/or using dynamic batching for regulation. We plan on evaluating our models. While we will perform sanity checks on the forecasts there is no ground truth so most evaluation will be done on the time series models. We will use canary testing to first check if the system is ready to go live and later allow user feedback. 
 
 #### Data pipeline
 
@@ -120,7 +121,7 @@ We will be integrating our smaller models into one forcast. The projections outp
 |Persistent <br> Storage| Chameleon persistent storage for models and artefacts, container images, data  |
 |Offline <br> data| Structured storage of the data described in csv files object store.            |
 |Data <br> Pipeline| Automated data pipeline Airflow for ingestion, transformation, and storage.    |
-|Online <br> data  | Real time ingestion of shooting and collision data as these are updated daily  |
+|Online <br> data  | Real time ingestion of grid data  |
 
 We will be attempting the difficulty question for unit 8, i.e., implement an interactive and comprehensive data dashboard, that members of the team can use to get high-level insight into the data and data quality.
 
