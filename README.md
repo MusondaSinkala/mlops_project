@@ -1,61 +1,20 @@
+## Identifying player similarities in Football
 
-## Building a More Flexible Time-Series Forecaster
-
-### Value Proposition:
-Forecasting demand is a crucial part of many businesses, government departments and non-profits. Improving the accuracy, robustness and reliability of forecasting models is an open-problem. While not as popular as natural language processing, generative models have been developed exclusively for improving time-series forecasting performance. Forecast accuracy benefits top-line, bottom-line, and asset utilization performance. By accurately predicting demand, companies can increase short-term sales by minimizing stock-outs. Over time, as they develop a track record for meeting customer commitments, they improve customer satisfaction, leading to increased market share, improved loyalty, and greater pricing power.
-
+Value Proposition:
+Football clubs and scouting agencies, such as Burnley FC, need ways to identify affordable and tactically appropriate player alternatives when replacing retired/sold players. Current methods rely heavily on manual filtering of stats and extensive video analysis through platforms such as WyScout, which is time-consuming and subject to human bias. Our tool offers a scalable, automated solution that surfaces similar players by analyzing both event metrics (e.g., goals, assists) and spatial behavior on the pitch. This gives clubs and analysts deeper tactical insights and dramatically cuts down scouting time. The aim is therefore to present this tool in collaboration with WyScout’s player scouting video-based platform by rapidly detailing alternative players to look into when player information is shared.
 
 
-### Present Solution:
-There are many B2B platforms that provide businesses with time-series forecasting tools. One such platform provider is [Nixtla](https://www.nixtla.io/), which claims to democratize time-series analysis by eliminating the need for model training and making predictions available for millions of time-series in seconds. They do this by providing API access to a model called TimeGPT, which is trained on millions of time-series of financial, weather, energy, and web data. 
+Status Quo & Business Metric:
+Current Approach: People rely on scouting reports and video analyses that can be subjective and time consuming. 
 
-However, [research](https://arxiv.org/html/2412.09880v1) has shown that smaller foundational models fine-tuned on specific datasets perform much better than large, "general-purpose" models. One such model is Google's TimesFM model, a 200M parameter, decoder only foundational model (also mentioned in the research paper above). 
-
-
-### Proposed System
-Nixtla's TimeGPT is closed source and their commercial platform currently does not provide users with the ability to finetune the model, although this is available through their developer APIs. They similarly do not provide infrastructure to schedule finetuning on real-time, streaming data at fixed intervals. 
-
-Our solution is to build a platform using the open-source TimesFM model that allows users to fine-tune the foundational model on their own datasets, set up systems to continuously fine-tune the model on new, incoming data, all while interacting with a user-friendly interface.
-
-This system could become part of Nixtla, while they have a paid, closed-source model, incorporating open-source models with propriety infrastructure could attract more power users to the company. Note that, according to the TimesFM [paper](https://arxiv.org/pdf/2310.10688), it's already beating state of the art time-serires model.
-
-To improve decision-making, our system will include:
-
-#### Time Series Forecasting for Key Neighborhood Metrics:
-**Rent Trends:** Predicting future rental prices to help users gauge affordability over time.
-
-**Demographic Shifts:** Forecasting changes in demographic distributions to provide insights into neighborhood evolution.
-
-**Safety Trends:** Predicting trends in vehicle collisions and shootings to assess the potential long-term safety of an area.
+Proposal Advantage: Our system provides a data-driven, spatial-centric tool, enabling users to make more strategic, long-term decisions about which players to scout further and eventually purchase.
 
 
-#### CitiBike Accessibility Clustering:
-Using a clustering model to identify neighborhoods with high CitiBike accessibility, using the number of CitiBike stations as a proxy for CitiBike infrastructure.
-
-
-Since New York's infrastructure evolves slowly, we think these forecasting models, combined with the latest data from the OpenData API will yield reliable predictions.
-
-### Present Solution:
-People rely on Reddit, personal recommendations, or scattered online sources. These methods are subjective, inconsistent, and do not account for future trends.
-
-
-### Proposed Solution System: 
-The system will initially ask users to select what's important to them. The initial system will let people choose between prioritising parks vs restaurants, and will then suggest several neighborhoods based on what was selected. 
-This is done by manually labelling neighborhoods either park-focused or dining-focused based on the number of parks/high quality restaurants based in them. 
-From there, we move to predicting how the safety, demographic, and rental landscape of the neighborhood will change over a user-specified time horizon.
-
-In this way, our system is more data-driven and reliable than the current way people understand neighborhoods. It's also important to note that people
-already rely on similar systems to judge some aspects like safety ([Crime Map NYC](https://www.arcgis.com/apps/instant/sidebar/index.html?appid=8153f961507040de8dbf9a53145f18c4)). Our system can be seen as 
-expanding this method to other aspects that make a neighborhood livable.
-
-
-### Business Metrics for Success:
-**User satisfaction:** Measured by follow-up surveys asking users if they found the system useful.
-
-**User Retention:** Measuring number of returning users.
-
-**Model Performance:** Forecasting accuracy of localized marginal energy prices, calculated by comparing it to the real data as it becomes available.
-
+Business Metrics for Success:
+Precision/purity of Player Similarity: Proportion of top-N retrieved players who match in refined roles (from Transfermarkt-enhanced WyScout data).
+Action Consistency Evaluation: Holdout test—split each player into two time-based subsets (Player A and Player B). Measure how often Player B is returned as the most similar to Player A.
+Engagement Rate (for Wyscout scenario): Number of users who interact with the “similar player” recommendations.
+By focusing on the spatial behaviour of players, this system transfers video analysis-dependent information into a dashboard that is numerically and heatmap-based.
 
 ### Contributors
 
@@ -75,17 +34,19 @@ expanding this method to other aspects that make a neighborhood livable.
 
 | Dataset           | How it was created | Conditions of use | Link              |
 |-------------------|--------------------|-------------------|-------------------|
-| US Energy         | Grid Status        | n/a               | *1 below          |
-| Irish Public Transit      | Dublin Bus, Bus Éireann, and Go-Ahead Ireland    | n/a               | *2 below          |
-| Satellite Positions   | N2YO Ham Radio      | n/a               | *3 below          |
+| WyScout Data      |                    | n/a               | *1 below          |
+| Statsbomb Data    |                    | n/a               | *2 below          |
+| Transfermarkt Data|                    | n/a               | *3 below          |
+| Model 1: PCA <br> Clustering | n/a                | n/a               | n/a               |
+| Model 2: Siamese <br> Network | n/a                | n/a               | n/a               |
+| Model 1: Distance-matching <br> algorithm | n/a                | n/a               | n/a               |
 
-*1 = https://www.gridstatus.io/datasets
 
-This contains 272 individual datasets including ISONE (New England energy grid) LMP (locational marginal pricing) Real Time 5 Min Final which updates every five minutes and has ~330,000,000 rows and ERCOT (Texas energy grid) LMP By Settlement Point which updates frequently and has ~930,000,000 rows. These will be the main datasets used in our project. 
+*1 = https://figshare.com/collections/_/4415000
 
-*2 = https://developer.nationaltransport.ie/api-details#api=gtfsr&operation=TripUpdates
+*2 = https://github.com/statsbomb/open-data
 
-*3 = https://www.n2yo.com/api/
+*3 = https://data.world/dcereijo/player-scores
 
 ### Summary of infrastructure requirements
 
@@ -93,7 +54,7 @@ This contains 272 individual datasets including ISONE (New England energy grid) 
 | Requirement     | How many/when                 | Justification                           |
 |-----------------|-------------------------------|-----------------------------------------|
 | `m1.medium` VMs | 3 for entire project duration | One for model training, one for model <br> serving and the last for the dashboard                       
-| 2 A100 GPUs   | 3 hour block twice a week  | We might use an RNN for the time series <br> data and would need to GPU to speed up <br>  training
+| 2 A100 GPUs     | 3 hour block twice a week     | We might use an RNN for the time series <br> data and would need to GPU to speed up <br>  training |
 | Floating IPs    | 1 for entire project duration,<br>  1 for sporadic use | We need a floating IP so the VM can <br> communicate with our persistent storage <br>  as well as for training and serving <br>   |          
 |Persistent <br> Storage | Unclear as of now  | For model, data and artifact storage for <br>  the project duration |
 
