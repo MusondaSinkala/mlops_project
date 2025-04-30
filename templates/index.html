@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Player Scouting Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        #comparison-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+        #similar-players-panel {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+            min-width: 200px;
+            width: 200px;
+            max-height: 1000px;
+            overflow-y: auto;
+        }
+        .players-panel {
+            display: flex;
+            gap: 20px;
+            flex-grow: 1;
+        }
+        .player-panel {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            width: 100%;
+            position: relative;
+        }
+        .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            display: none;
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+        }
+        .player-panel:hover .remove-btn {
+            display: block;
+        }
+        .player-header {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .player-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .mini-info {
+            margin-top: 30px;
+            column-count: 2;
+            column-gap: 20px;
+            font-size: 14px;
+        }
+        .mini-info p {
+            margin: 2px 0;
+        }
+        .density-plot {
+            height: 400px;
+            background-color: #e0e0e0;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .stats-table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
+        .stats-table th, .stats-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        .stats-table-container {
+            max-height: 300px; /* Or whatever height you prefer */
+            overflow-y: auto;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="search-bar">
+    <input type="text" id="playerSearch" placeholder="Search for a player..." style="width: 100%; padding: 10px;">
+</div>
+
+<div id="comparison-container">
+    <div id="similar-players-panel">
+        <strong>Similar Players:</strong>
+        <div id="similarPlayersList">Load a player in the second panel to see suggestions...</div>
+    </div>
+
+    <div class="players-panel">
+        <div class="player-panel" id="playerPanel1">
+            <button class="remove-btn" onclick="clearPanel('playerPanel1')">x</button>
+            <div class="player-header">
+                <img src="{{ url_for('static', filename='images/Unknown.jpg') }}" alt="Player Image" class="player-image">
+                <div class="mini-info" id="playerInfo1"></div>
+            </div>
+            <div class="density-plot" id="densityPlot1">Kernel Density Plot Placeholder</div>
+            <div class="stats-table-container">
+                <table class="stats-table" id="statsTable1"></table>
+            </div>
+        </div>
+
+        <div class="player-panel" id="playerPanel2">
+            <button class="remove-btn" onclick="clearPanel('playerPanel2')">x</button>
+            <div class="player-header">
+                <img src="{{ url_for('static', filename='images/Unknown.jpg') }}" alt="Player Image" class="player-image">
+                <div class="mini-info" id="playerInfo2"></div>
+            </div>
+            <div class="density-plot" id="densityPlot2">Kernel Density Plot Placeholder</div>
+            <div class="stats-table-container">
+                <table class="stats-table" id="statsTable2"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Script remains unchanged, only edited part is info panel update
+let loadCount = 0;
+
+function clearPanel(panelId) {
+    const panel = document.getElementById(panelId);
+    panel.querySelector('.mini-info').innerHTML = "";
+    panel.querySelector('.stats-table').innerHTML = "";
+    panel.querySelector('.player-image').src = "{{ url_for('static', filename='images/Unknown.jpg') }}";
+    panel.querySelector('.density-plot').innerText = "Kernel Density Plot Placeholder";
+
+    if (panelId === 'playerPanel1') {
+        document.getElementById('similarPlayersList').innerText = "Load a player in the second panel to see suggestions...";
+        loadCount = 0;
+    } else if (panelId === 'playerPanel2') {
+        loadCount = 1;
+    }
+}
+
+function loadPlayerData(playerId) {
+    const isFirstLoad = loadCount === 0;
+    const panelId = isFirstLoad ? "playerPanel1" : "playerPanel2";
+    const panelNum = isFirstLoad ? "1" : "2";
+    const panel = document.getElementById(panelId);
+    const info = panel.querySelector(".mini-info");
+    const statsTable = document.getElementById("statsTable" + panelNum);
+    const image = panel.querySelector(".player-image");
+    const density = document.getElementById("densityPlot" + panelNum);
+
+    loadCount++;
+
+    fetch(`/player/${playerId}`)
+        .then(response => response.json())
+        .then(data => {
+            image.src = data.image_url || "{{ url_for('static', filename='images/Unknown.jpg') }}";
+            info.innerHTML = `
+                <p><strong>Name:</strong> ${data.full_name}</p>
+                <p><strong>City of Birth:</strong> ${data.city_of_birth}</p>
+                <p><strong>Age:</strong> ${data.age}</p>
+                <p><strong>Height:</strong> ${data.height}cm</p>
+                <p><strong>Weight:</strong> ${data.weight}kgs</p>
+                <p><strong>Foot:</strong> ${data.foot}</p>
+                <p><strong>Role:</strong> ${data.role}</p>
+                <p><strong>Club:</strong> ${data.club}</p>
+                <p><strong>Contract Expiry:</strong> ${data.contract_expiration_date}</p>
+                <p><strong>Estimated Market Value:</strong> ${data.market_value_in_eur || 'Unknown'}</p>
+                <p><strong>Agent:</strong> ${data.agent_name}</p>
+                <p><strong>National Team:</strong> ${data.national_team}</p>
+            `;
+
+            // Construct stats object
+            const stats = {
+                "Appearances": data.matches_played,
+            };
+
+            // Add position-specific metrics
+            if (data.position === 'GK') {
+                Object.assign(stats, {
+                    "Balls Attacked": data.gk_balls_attacked,
+                    "GK Save Success": data.perc_gk_save_success,
+                    "Pass Accuracy": data.pass_accuracy,
+                    "Own Goals": data.own_goals
+                });
+            } else if (data.position === 'DF') {
+                Object.assign(stats, {
+                    "Aerial Duels Won": data.perc_aerial_duels_won,
+                    "Defensive Duels Won": data.ground_defensive_duels_won,
+                    "Loose Balls Won": data.perc_loose_balls_won,
+                    "Sliding Tackles": data.sliding_tackles,
+                    "Interceptions": data.interceptions,
+                    "Clearances": data.clearances,
+                    "Blocks": data.blocks,
+                    "Possession Regained": data.possession_regained,
+                    "Own Goals": data.own_goals,
+                    "Pass Accuracy": data.pass_accuracy,
+                    "Successful Runs With Ball": data.perc_successful_runs_with_ball
+                });
+            } else if (data.position === 'MD') {
+                Object.assign(stats, {
+                    "Total Passes": data.total_passes,
+                    "Pass Accuracy": data.pass_accuracy,
+                    "Key Passes": data.key_passes,
+                    "Assists": data.assists,
+                    "Successful Runs With Ball": data.perc_successful_runs_with_ball,
+                    "Crosses": data.crosses,
+                    "Dribbles": data.dribbles,
+                    "Free Kick Shots": data.free_kick_shots,
+                    "Free Kick Crosses": data.free_kick_crosses,
+                    "Total Shots": data.total_shots,
+                    "Shot Accuracy": data.shot_accuracy,
+                    "Goals": data.goals,
+                    "Penalties Taken": data.penalties_taken,
+                    "Penalty Conversion": data.penalty_conversion,
+                    "Defensive Duels Won": data.ground_defensive_duels_won,
+                    "Loose Balls Won": data.perc_loose_balls_won,
+                    "Sliding Tackles": data.sliding_tackles,
+                    "Interceptions": data.interceptions,
+                    "Clearances": data.clearances,
+                    "Blocks": data.blocks,
+                    "Possession Regained": data.possession_regained,
+                    "Own Goals": data.own_goals
+                });
+            } else if (data.position === 'FW') {
+                Object.assign(stats, {
+                    "Total Shots": data.total_shots,
+                    "Shot Accuracy": data.shot_accuracy,
+                    "Goals": data.goals,
+                    "Shot Conversion": data.shot_conversion || 'N/A',
+                    "Penalties Taken": data.penalties_taken,
+                    "Penalty Conversion": data.penalty_conversion,
+                    "Total Passes": data.total_passes,
+                    "Pass Accuracy": data.pass_accuracy,
+                    "Key Passes": data.key_passes,
+                    "Assists": data.assists,
+                    "Successful Runs With Ball": data.perc_successful_runs_with_ball,
+                    "Crosses": data.crosses,
+                    "Dribbles": data.dribbles,
+                    "Free Kick Shots": data.free_kick_shots,
+                    "Free Kick Crosses": data.free_kick_crosses,
+                    "Aerial Duels Won": data.perc_aerial_duels_won
+                });
+            }
+
+            // Create stats table
+            statsTable.innerHTML = `
+                <tr><th>Metric</th><th>Value</th></tr>
+                ${Object.entries(stats).map(([key, value]) => `<tr><td>${key}</td><td>${value}</td></tr>`).join('')}
+            `;
+
+            density.innerHTML = `<img src="${data.density_plot_url}" alt="Density Plot" style="width:100%; height:100%;">`;
+
+            if (isFirstLoad) {
+                fetch(`/similar_players/${playerId}`)
+                    .then(response => response.json())
+                    .then(similarData => {
+                        const similarDiv = document.getElementById("similarPlayersList");
+                        similarDiv.innerHTML = similarData.similar_players.map(player => `
+                            <div style="margin-bottom: 10px;">
+                                <img src="${player.image_url}" alt="${player.full_name}" style="width:50px; height:50px; object-fit:cover; border-radius:4px; margin-right:10px;">
+                                <strong>${player.full_name}</strong><br>
+                                <small>${player.club}</small>
+                            </div>
+                        `).join("");
+                    });
+            }
+        });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("playerSearch");
+    const suggestionBox = document.createElement("div");
+    suggestionBox.style.border = "1px solid #ccc";
+    suggestionBox.style.backgroundColor = "#fff";
+    suggestionBox.style.position = "absolute";
+    suggestionBox.style.zIndex = 1000;
+    suggestionBox.style.width = "100%";
+    suggestionBox.style.maxHeight = "200px";
+    suggestionBox.style.overflowY = "auto";
+    suggestionBox.style.display = "none";
+    searchInput.parentNode.appendChild(suggestionBox);
+
+    let timeout;
+
+    searchInput.addEventListener("input", function () {
+        const query = this.value.trim();
+
+        clearTimeout(timeout);
+        if (query.length < 2) {
+            suggestionBox.style.display = "none";
+            return;
+        }
+
+        timeout = setTimeout(() => {
+            fetch(`/get_player_id`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: query })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    suggestionBox.innerHTML = "";
+                    if (data.player_id) {
+                        const div = document.createElement("div");
+                        div.textContent = query;
+                        div.style.padding = "8px";
+                        div.style.cursor = "pointer";
+                        div.addEventListener("click", () => {
+                            searchInput.value = query;
+                            suggestionBox.style.display = "none";
+                            loadPlayerData(data.player_id);
+                        });
+                        suggestionBox.appendChild(div);
+                        suggestionBox.style.display = "block";
+                    } else {
+                        suggestionBox.style.display = "none";
+                    }
+                });
+        }, 200);
+    });
+
+    document.addEventListener("click", function (e) {
+        if (!suggestionBox.contains(e.target) && e.target !== searchInput) {
+            suggestionBox.style.display = "none";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

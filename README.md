@@ -5,7 +5,7 @@ Football clubs and scouting agencies, such as Burnley FC, need ways to identify 
 
 
 Status Quo & Business Metric:
-Current Approach: People rely on scouting reports and video analyses that can be subjective and time consuming. 
+Current Approach: Scouting departments rely on scouting reports and video analyses that can be subjective and time consuming. 
 
 Proposal Advantage: Our system provides a data-driven, spatial-centric tool, enabling users to make more strategic, long-term decisions about which players to scout further and eventually purchase.
 
@@ -37,9 +37,10 @@ By focusing on the spatial behaviour of players, this system transfers video ana
 | WyScout Data      |                    | n/a               | *1 below          |
 | Statsbomb Data    |                    | n/a               | *2 below          |
 | Transfermarkt Data|                    | n/a               | *3 below          |
-| Model 1: PCA <br> Clustering | n/a                | n/a               | n/a               |
-| Model 2: Siamese <br> Network | n/a                | n/a               | n/a               |
-| Model 1: Distance-matching <br> algorithm | n/a                | n/a               | n/a               |
+| Model 1: UMAP <br> Clustering | n/a                | n/a               | n/a               |
+| Model 2: KNN      | n/a                | n/a               | n/a               |
+| Model 3: Distance-matching <br> algorithm | n/a                | n/a               | n/a   |
+| Model 4: Predictive Model <br> (i.e., Random Forest, XGBoost, SVM)| n/a                | n/a               | n/a   |
 
 
 *1 = https://figshare.com/collections/_/4415000
@@ -62,7 +63,6 @@ By focusing on the spatial behaviour of players, this system transfers video ana
 ### Detailed design plan
 
 Our project follows a cloud-native (Unit 3) approach using Git to automate provisioning and deployment. Microservices are containerized in Docker and served through Kubernetes for scalability and fault tolerance. The CI/CD pipeline automates model retraining and logs results with MLflow (Unit 5). An ETL pipeline ingests data from the US grid data (and can work on other sources) , processes it through data cleaning and transformation steps, and loads it into the data repository for training and inference. Offline data (Unit 8) is stored persistently using Chameleon resources, streaming pipelines (Unit 8) handle real-time updates. Persistent storage (Unit 8) will be used to ensure that trained models, logs, and artifacts persist beyond individual runs. Distributed training is accelerated using Ray Train (Unit 5), with hyperparameter tuning handled by Ray Tune for optimal performance (Unit 5). The infrastructure will ensure fast retraining, scalable deployment, and continuous optimization.
- 
 
 #### Model training and training platforms
 
