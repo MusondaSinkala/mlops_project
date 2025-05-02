@@ -1,0 +1,21 @@
+flask
+gunicorn
+
+# Data handling
+pandas
+numpy
+polars
+unidecode
+
+# Visualization
+matplotlib
+seaborn
+mplsoccer
+
+# Dimensionality reduction & clustering
+scikit-learn
+umap-learn
+scipy
+faiss-cpu
+hnswlib
+annoy
