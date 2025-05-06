@@ -13,3 +13,4 @@ faiss-cpu
 hnswlib
 statsbombpy
 statsbomb
+flask
