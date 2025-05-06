@@ -14,3 +14,4 @@ hnswlib
 statsbombpy
 statsbomb
 flask
+pyarrow
