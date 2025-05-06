@@ -27,7 +27,7 @@ By focusing on the spatial behaviour of players, this system transfers video ana
 
 ### System diagram
 
-![System Diagram](https://github.com/HarisNaveed17/mlops_project/blob/main/new_diagram.jpeg?raw=true)
+![System Diagram](https://github.com/MusondaSinkala/mlops_project/blob/main/MLOps Sys Design.png?raw=true)
 
 
 ### Summary of outside materials
