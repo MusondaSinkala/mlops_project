@@ -107,6 +107,3 @@ We will be attempting the difficulty question for unit 8, i.e., implement an int
 |Cloud-native   | Use immutable infrastructure, microservices, and containerized workloads  |
 |CI/CD          | Automated pipeline for retraining, testing, optimization, and deployment  |
 |Deployment     | Deploy to production with monitoring and auto-rollback mechanisms         |
-
-
-
