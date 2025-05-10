@@ -104,7 +104,7 @@ print(-1)
 mlflow.set_experiment("MLflow Quickstart")
 
 # Start an MLflow run
-with mlflow.start_run():
+with mlflow.start_run(log_system_metrics=True):
     # Log the hyperparameters
     mlflow.log_params(rf_params)
 
