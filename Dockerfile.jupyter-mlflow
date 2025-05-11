@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/pytorch-notebook
+FROM quay.io/jupyterhub/jupyterhub
 
 USER ${NB_UID}
 
