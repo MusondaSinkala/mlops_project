@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import mlflow
 from mlflow.models import infer_signature
 
-mlflow.set_tracking_uri(uri="http://127.0.0.1:8080")
+mlflow.set_tracking_uri(uri="http://129.114.26.77:8000")
 
 
 def is_percentage_string(val):
