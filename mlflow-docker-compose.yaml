@@ -54,13 +54,11 @@ services:
       - postgres_data:/var/lib/postgresql/data  # use a volume so storage persists beyond container lifetype
 
   mlflow:
-    networks:
-      - mlops-net
-    image: ghcr.io/mlflow/mlflow:
-    networks:
-      - mlops-netv2.11.1
+    image: ghcr.io/mlflow/mlflow:v2.11.1
     container_name: mlflow
     restart: always
+    networks:
+      - mlops-net
     depends_on:
       - minio
       - postgres
