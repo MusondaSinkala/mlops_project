@@ -1,4 +1,5 @@
 name: eval_online
+
 services:
   fastapi_server:
     networks:
@@ -8,7 +9,7 @@ services:
       dockerfile: Dockerfile
     container_name: fastapi_server
     ports:
-      - "8000:8000"  # for HTTP requests
+      - "8001:8000"  # remapped from 8000 to avoid MLflow conflict
 
   flask:
     build:
@@ -17,16 +18,14 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - FASTAPI_SERVER_URL=http://fastapi_server:
+      - FASTAPI_SERVER_URL=http://fastapi_server:8000
     networks:
-      - mlops-net8000 # let Flask app know where to access the inference endpoint
+      - mlops-net
 
   prometheus:
     networks:
       - mlops-net
-    image: prom/prometheus:
-    networks:
-      - mlops-netlatest
+    image: prom/prometheus:latest
     container_name: prometheus
     ports:
       - "9090:9090"
@@ -36,9 +35,7 @@ services:
   grafana:
     networks:
       - mlops-net
-    image: grafana/grafana:
-    networks:
-      - mlops-netlatest
+    image: grafana/grafana:latest
     container_name: grafana
     ports:
       - "3000:3000"
@@ -48,11 +45,9 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
 
-
 volumes:
   football_data:
     external: true
-
 
 networks:
   mlops-net:
