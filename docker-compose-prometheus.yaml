@@ -1,0 +1,59 @@
+name: eval_online
+services:
+  fastapi_server:
+    networks:
+      - mlops-net
+    build:
+      context: /home/cc/eval-online-chi/fastapi_pt
+      dockerfile: Dockerfile
+    container_name: fastapi_server
+    ports:
+      - "8000:8000"  # for HTTP requests
+
+  flask:
+    build:
+      context: https://github.com/teaching-on-testbeds/gourmetgram.git#fastapi
+    container_name: flask
+    ports:
+      - "5000:5000"
+    environment:
+      - FASTAPI_SERVER_URL=http://fastapi_server:
+    networks:
+      - mlops-net8000 # let Flask app know where to access the inference endpoint
+
+  prometheus:
+    networks:
+      - mlops-net
+    image: prom/prometheus:
+    networks:
+      - mlops-netlatest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    networks:
+      - mlops-net
+    image: grafana/grafana:
+    networks:
+      - mlops-netlatest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+
+volumes:
+  football_data:
+    external: true
+
+
+networks:
+  mlops-net:
+    external: true
