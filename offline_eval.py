@@ -56,7 +56,9 @@ for run in runs:
         break
 
 if model_uri is None:
-    raise RuntimeError("No run found with 'football_model' artifact")
+    raise RuntimeError("No run found with football_model artifact")
+
+model = mlflow.sklearn.load_model(model_uri)
 
 # Helper to safely parse KNN ID strings
 def parse_knn(knn_str):
