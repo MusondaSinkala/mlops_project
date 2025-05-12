@@ -74,7 +74,7 @@ services:
   # === Monitoring and APIs ===
   fastapi_server:
     build:
-      context: ./mlops_project/fastapi_pt
+      context: ./fastapi_pt
       dockerfile: Dockerfile
     container_name: fastapi_server
     ports:
