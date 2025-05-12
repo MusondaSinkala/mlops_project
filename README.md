@@ -21,8 +21,8 @@ By focusing on the spatial behaviour of players, this system transfers video ana
 | Name                            | Responsible for | Link to their commits in this repo |
 |---------------------------------|-----------------|------------------------------------|
 | All team members                | Unit 3, value proposition, business metrics,         |
-| Haris Naveed                    | Units 4 & 5     |                                    |
-| Ariel Haberman                  | Units 6 & 7     |                                    |
+| Haris Naveed                    | Units 4 & 5     |  https://github.com/HarisNaveed17/mlops_project/commit/7c92641b4d6b52f7373c625e913b72fa564b7381, https://github.com/HarisNaveed17/mlops_project/commit/3b556303e89ca9e572085a0c9c471ab249c72966 , https://github.com/HarisNaveed17/mlops_project/commit/20d1962937bcd05b6a7285ca4f4a087e796eee2b                                 |
+| Ariel Haberman                  | Units 6 & 7     | https://github.com/HarisNaveed17/mlops_project/commit/cadf6cbac46c2a89369e212a0b92ae73a8c2e6fe, https://github.com/HarisNaveed17/mlops_project/commit/4d5e8e446ac94522e16428e40a946d211922d23c                                 |
 | Musonda Sinkala                 | Unit 8          |                                    |
 
 ### System diagram
