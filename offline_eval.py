@@ -5,7 +5,7 @@ import mlflow.sklearn
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 from sklearn.model_selection import train_test_split
 import ast
-
+#with help from chatgpt 
 mlflow.set_tracking_uri(uri="http://129.114.26.77:8000")
 
 
@@ -43,8 +43,21 @@ y = final_data.iloc[:, -1]
 _, X_val, _, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 X_val, X_test, y_val, y_test = train_test_split(X_val, y_val, test_size=0.5, random_state=42)
 
-# Load the trained model
-model_uri = "runs:/e423875c582a4ef996eb58b8f47071e6/football_model"
+# Dynamically get the latest model run containing "football_model"
+client = MlflowClient()
+experiment = client.get_experiment_by_name("Default")
+runs = client.search_runs(experiment.experiment_id, "attributes.status = 'FINISHED'", order_by=["start_time DESC"])
+
+model_uri = None
+for run in runs:
+    artifacts = client.list_artifacts(run.info.run_id)
+    if any(art.path == "football_model" for art in artifacts):
+        model_uri = f"runs:/{run.info.run_id}/football_model"
+        break
+
+if model_uri is None:
+    raise RuntimeError("No run found with football_model artifact")
+
 model = mlflow.sklearn.load_model(model_uri)
 
 # Helper to safely parse KNN ID strings
