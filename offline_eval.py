@@ -1,6 +1,7 @@
 import pandas as pd
 import re
 import mlflow
+from mlflow.tracking import MlflowClient
 import mlflow.sklearn
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 from sklearn.model_selection import train_test_split
