@@ -13,6 +13,6 @@ RUN pip install fastapi uvicorn pandas scikit-learn mlflow
 EXPOSE 8000
 
 # Run the app
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
 
 

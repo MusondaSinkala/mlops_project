@@ -74,7 +74,7 @@ services:
   # === Monitoring and APIs ===
   fastapi_server:
     build:
-      context: /home/cc/mlops_project/fastapi_pt
+      context: /home/cc/eval-online-chi/fastapi_pt
       dockerfile: Dockerfile
     container_name: fastapi_server
     ports:
@@ -82,7 +82,7 @@ services:
 
   flask:
     build:
-      context: https://github.com/HarisNaveed17/mlops_project/tree/main
+      context: https://github.com/HarisNaveed17/mlops_project.git
     container_name: flask
     ports:
       - "5000:5000"
