@@ -75,7 +75,7 @@ services:
   fastapi_server:
     build:
       context: /home/cc/mlops_project/fastapi_pt
-      dockerfile: /home/cc/mlops_project/fastapi_pt/Dockerfile
+      dockerfile: Dockerfile
     container_name: fastapi_server
     ports:
       - "8001:8000"
