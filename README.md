@@ -21,8 +21,9 @@ By focusing on the spatial behaviour of players, this system transfers video ana
 | Name                            | Responsible for | Link to their commits in this repo |
 |---------------------------------|-----------------|------------------------------------|
 | All team members                | Unit 3, value proposition, business metrics,         |
-| Haris Naveed                    | Units 4 & 5     |                                    |
-| Ariel Haberman                  | Units 6 & 7     |                                    |
+| Haris Naveed                    | Units 4 & 5     |                  https://github.com/HarisNaveed17/mlops_project/commit/7c92641b4d6b52f7373c625e913b72fa564b7381, https://github.com/HarisNaveed17/mlops_project/commit/3b556303e89ca9e572085a0c9c471ab249c72966 , https://github.com/HarisNaveed17/mlops_project/commit/20d1962937bcd05b6a7285ca4f4a087e796eee2b
+                  |
+| Ariel Haberman                  | Units 6 & 7     |     https://github.com/HarisNaveed17/mlops_project/commit/cadf6cbac46c2a89369e212a0b92ae73a8c2e6fe, https://github.com/HarisNaveed17/mlops_project/commit/4d5e8e446ac94522e16428e40a946d211922d23c                               |
 | Musonda Sinkala                 | Unit 8          |                                    |
 
 ### System diagram
@@ -94,6 +95,8 @@ Run '''Docker logs mlflow_jpynb''' and run train.py in the terminal inside the j
 #### Model serving and monitoring platforms
 
 This project will be focusing on training on large time model. The projections output by this system will then be served to the user at a single API endpoint. We plan on exploring several model optimization techniques like graph optimizations and reduced precision but avoiding ones that require specific hardware backends. For system level required concurrency we plan on trying FastAPI and/or using dynamic batching for regulation. We plan on evaluating our models. While we will perform sanity checks on the forecasts there is no ground truth so most evaluation will be done on the time series models. We will use canary testing to first check if the system is ready to go live and later allow user feedback. 
+1. Once the steps for the previous part have been followed run offline_eval.py in the jupyter terminal
+2. Online eval sadly was defeated by a dockerfile bug that the internet failed to help me with.
 
 #### Data pipeline
 
