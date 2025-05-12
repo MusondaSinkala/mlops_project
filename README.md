@@ -37,9 +37,8 @@ By focusing on the spatial behaviour of players, this system transfers video ana
 | WyScout Data      |                    | n/a               | *1 below          |
 | Statsbomb Data    |                    | n/a               | *2 below          |
 | Transfermarkt Data|                    | n/a               | *3 below          |
-| Model 1: PCA <br> Clustering | n/a                | n/a               | n/a               |
-| Model 2: Siamese <br> Network | n/a                | n/a               | n/a               |
-| Model 1: Distance-matching <br> algorithm | n/a                | n/a               | n/a               |
+| Model 1: K-means <br> Clustering | n/a                | n/a               | n/a               |
+| Model 2: Random Forest Classifier | n/a                | n/a               | n/a               |
 
 
 *1 = https://figshare.com/collections/_/4415000
@@ -48,15 +47,14 @@ By focusing on the spatial behaviour of players, this system transfers video ana
 
 *3 = https://data.world/dcereijo/player-scores
 
-### Summary of infrastructure requirements
+### Infrastructure Used
 
 
 | Requirement     | How many/when                 | Justification                           |
 |-----------------|-------------------------------|-----------------------------------------|
-| `m1.medium` VMs | 3 for entire project duration | One for model training, one for model <br> serving and the last for the dashboard                       
-| 2 A100 GPUs     | 3 hour block twice a week     | We might use an RNN for the time series <br> data and would need to GPU to speed up <br>  training |
-| Floating IPs    | 1 for entire project duration,<br>  1 for sporadic use | We need a floating IP so the VM can <br> communicate with our persistent storage <br>  as well as for training and serving <br>   |          
-|Persistent <br> Storage | Unclear as of now  | For model, data and artifact storage for <br>  the project duration |
+| `m1.medium` VMs | 1 for entire project duration | Used for Model Training and Experiment Tracking                    
+| Floating IPs    | 1 for entire project duration|  Since we used only one server and used a docker volume as persistent storage  |          
+|Persistent <br> Storage | 3 Volumes  | For data and artifact storage for <br>  the project duration |
 
 
 ### Detailed design plan
@@ -69,8 +67,8 @@ Our project follows a cloud-native (Unit 3) approach using Git to automate provi
 Unit 4:
 |Req             | How we will satisfy it                                                   |
 |----------------|--------------------------------------------------------------------------|
-|Train & retrain | Train time-series models on US power grid data |
-|Modelling       | Choose models based on interpretability, and forecasting accuracy.       |
+|Train & retrain | Train the model on the processed data and predict the cluster to which an incoming player belongs. |
+|Modelling       | NA     |
 
 
 Unit 5:
@@ -78,8 +76,7 @@ Unit 5:
 |Req        | How we will satisfy it                                                         |
 |-----------|--------------------------------------------------------------------------------|
 |Experiment <br> tracking | Host MLflow on Chameleon to log all training runs, hyperparameters, and metrics|
-|Scheduling <br> training| Deploy Ray cluster on Chameleon; submit training jobs via Ray                  |
-|Ray train  | Will use Ray Train’s TorchTrainer for fault tolerance (if we decide to use an RNN)                          |
+
 
 
 #### Model serving and monitoring platforms
