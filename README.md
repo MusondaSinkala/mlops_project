@@ -21,8 +21,8 @@ By focusing on the spatial behaviour of players, this system transfers video ana
 | Name                            | Responsible for | Link to their commits in this repo |
 |---------------------------------|-----------------|------------------------------------|
 | All team members                | Unit 3, value proposition, business metrics,         |
-| Haris Naveed                    | Units 4 & 5     |                                    |
-| Ariel Haberman                  | Units 6 & 7     |                                    |
+| Haris Naveed                    | Units 4 & 5     |  https://github.com/HarisNaveed17/mlops_project/commit/7c92641b4d6b52f7373c625e913b72fa564b7381, https://github.com/HarisNaveed17/mlops_project/commit/3b556303e89ca9e572085a0c9c471ab249c72966 , https://github.com/HarisNaveed17/mlops_project/commit/20d1962937bcd05b6a7285ca4f4a087e796eee2b                                 |
+| Ariel Haberman                  | Units 6 & 7     | https://github.com/HarisNaveed17/mlops_project/commit/cadf6cbac46c2a89369e212a0b92ae73a8c2e6fe, https://github.com/HarisNaveed17/mlops_project/commit/4d5e8e446ac94522e16428e40a946d211922d23c                                 |
 | Musonda Sinkala                 | Unit 8          |                                    |
 
 ### System diagram
@@ -37,9 +37,8 @@ By focusing on the spatial behaviour of players, this system transfers video ana
 | WyScout Data      |                    | n/a               | *1 below          |
 | Statsbomb Data    |                    | n/a               | *2 below          |
 | Transfermarkt Data|                    | n/a               | *3 below          |
-| Model 1: PCA <br> Clustering | n/a                | n/a               | n/a               |
-| Model 2: Siamese <br> Network | n/a                | n/a               | n/a               |
-| Model 1: Distance-matching <br> algorithm | n/a                | n/a               | n/a               |
+| Model 1: K-means <br> Clustering | n/a                | n/a               | n/a               |
+| Model 2: Random Forest Classifier | n/a                | n/a               | n/a               |
 
 
 *1 = https://figshare.com/collections/_/4415000
@@ -48,15 +47,14 @@ By focusing on the spatial behaviour of players, this system transfers video ana
 
 *3 = https://data.world/dcereijo/player-scores
 
-### Summary of infrastructure requirements
+### Infrastructure Used
 
 
 | Requirement     | How many/when                 | Justification                           |
 |-----------------|-------------------------------|-----------------------------------------|
-| `m1.medium` VMs | 3 for entire project duration | One for model training, one for model <br> serving and the last for the dashboard                       
-| 2 A100 GPUs     | 3 hour block twice a week     | We might use an RNN for the time series <br> data and would need to GPU to speed up <br>  training |
-| Floating IPs    | 1 for entire project duration,<br>  1 for sporadic use | We need a floating IP so the VM can <br> communicate with our persistent storage <br>  as well as for training and serving <br>   |          
-|Persistent <br> Storage | Unclear as of now  | For model, data and artifact storage for <br>  the project duration |
+| `m1.medium` VMs | 1 for entire project duration | Used for Model Training and Experiment Tracking                    
+| Floating IPs    | 1 for entire project duration|  Since we used only one server and used a docker volume as persistent storage  |          
+|Persistent <br> Storage | 3 Volumes  | For data and artifact storage for <br>  the project duration |
 
 
 ### Detailed design plan
@@ -69,8 +67,8 @@ Our project follows a cloud-native (Unit 3) approach using Git to automate provi
 Unit 4:
 |Req             | How we will satisfy it                                                   |
 |----------------|--------------------------------------------------------------------------|
-|Train & retrain | Train time-series models on US power grid data |
-|Modelling       | Choose models based on interpretability, and forecasting accuracy.       |
+|Train & retrain | Train the model on the processed data and predict the cluster to which an incoming player belongs. |
+|Modelling       | NA     |
 
 
 Unit 5:
@@ -78,8 +76,7 @@ Unit 5:
 |Req        | How we will satisfy it                                                         |
 |-----------|--------------------------------------------------------------------------------|
 |Experiment <br> tracking | Host MLflow on Chameleon to log all training runs, hyperparameters, and metrics|
-|Scheduling <br> training| Deploy Ray cluster on Chameleon; submit training jobs via Ray                  |
-|Ray train  | Will use Ray Train’s TorchTrainer for fault tolerance (if we decide to use an RNN)                          |
+
 
 
 #### Model serving and monitoring platforms
