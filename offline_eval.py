@@ -46,30 +46,15 @@ X_val, X_test, y_val, y_test = train_test_split(X_val, y_val, test_size=0.5, ran
 
 # Dynamically get the latest model run containing "football_model"
 client = MlflowClient()
-experiment = client.get_experiment_by_name("Default")
+experiment = client.get_experiment_by_name("MLflow Quickstart")
 runs = client.search_runs(experiment.experiment_id, "attributes.status = 'FINISHED'", order_by=["start_time DESC"])
 
 model_uri = None
 for run in runs:
-    # Option 1: Try listing artifacts (might miss nested or remote ones)
-    try:
-        artifacts = client.list_artifacts(run.info.run_id)
-        if any("football_model" in art.path for art in artifacts):
-            model_uri = f"runs:/{run.info.run_id}/football_model"
-            break
-    except:
-        continue
-
-# Option 2: Try parsing logged models (metadata approach)
-if model_uri is None:
     for run in runs:
-        try:
-            logged_models = run.data.tags.get("mlflow.log-model.history")
-            if logged_models and "football_model" in logged_models:
-                model_uri = f"runs:/{run.info.run_id}/football_model"
-                break
-        except:
-            continue
+    if "football_model" in run.info.artifact_uri:
+        model_uri = f"runs:/{run.info.run_id}/football_model"
+        break
 
 if model_uri is None:
     raise RuntimeError("No run found with 'football_model' artifact")
