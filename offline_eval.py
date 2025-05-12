@@ -8,8 +8,6 @@ import ast
 
 mlflow.set_tracking_uri(uri="http://129.114.26.77:8000")
 
-mlflow.set_experiment("soccer-role-eval")
-
 
 def is_percentage_string(val):
     if not isinstance(val, str):
@@ -45,37 +43,43 @@ y = final_data.iloc[:, -1]
 _, X_val, _, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 X_val, X_test, y_val, y_test = train_test_split(X_val, y_val, test_size=0.5, random_state=42)
 
-# Load the model
+# Load the trained model
 model_uri = "runs:/e423875c582a4ef996eb58b8f47071e6/football_model"
 model = mlflow.sklearn.load_model(model_uri)
 
-# Predict and evaluate
-y_pred = model.predict(X_test)
-accuracy = accuracy_score(y_test, y_pred)
-report = classification_report(y_test, y_pred, output_dict=True)
-conf_matrix = confusion_matrix(y_test, y_pred)
+# Helper to safely parse KNN ID strings
+def parse_knn(knn_str):
+    try:
+        return ast.literal_eval(knn_str)
+    except:
+        return []
 
-# Log metrics and evaluation artifacts with MLflow
-with mlflow.start_run(run_name="offline_eval"):
-    mlflow.log_metric("accuracy", accuracy)
+# Start new MLflow run
+with mlflow.start_run(run_name="offline_eval") as run:
+    # Predict and evaluate
+    y_pred = model.predict(X_test)
+    acc = accuracy_score(y_test, y_pred)
+    report = classification_report(y_test, y_pred, output_dict=True)
+    conf_matrix = confusion_matrix(y_test, y_pred)
 
-    # Log classification report
-    for label, scores in report.items():
-        if isinstance(scores, dict):
-            for metric, value in scores.items():
-                mlflow.log_metric(f"{label}_{metric}", value)
+    # Log basic metrics
+    mlflow.log_metric("accuracy", acc)
+    mlflow.log_metric("precision_avg", report["weighted avg"]["precision"])
+    mlflow.log_metric("recall_avg", report["weighted avg"]["recall"])
+    mlflow.log_metric("f1_avg", report["weighted avg"]["f1-score"])
+
+    print("Evaluation Metrics:")
+    print(f"Accuracy: {acc:.4f}")
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+    print("Confusion Matrix:")
+    print(conf_matrix)
 
     # Find misclassified players
     misclassified_indices = y_test.index[y_test != y_pred]
     misclassified_df = raw_data.loc[misclassified_indices]
 
-    # Helper to safely parse KNN ID strings
-    def parse_knn(knn_str):
-        try:
-            return ast.literal_eval(knn_str)
-        except:
-            return []
-
+    print("\nMisclassified Player Analysis:")
     cluster_agreement = []
     knn_agreement = []
 
@@ -97,24 +101,17 @@ with mlflow.start_run(run_name="offline_eval"):
             knn_agreement.append(knn_same_role / len(knn_roles))
 
     if cluster_agreement:
-        avg_cluster_agreement = sum(cluster_agreement) / len(cluster_agreement)
-        mlflow.log_metric("avg_cluster_role_agreement", avg_cluster_agreement)
+        cluster_score = sum(cluster_agreement)/len(cluster_agreement)
+        mlflow.log_metric("avg_cluster_role_agreement", cluster_score)
+        print(f"Average cluster role agreement: {cluster_score:.2f}")
     else:
         print("No cluster agreement data available.")
 
     if knn_agreement:
-        avg_knn_agreement = sum(knn_agreement) / len(knn_agreement)
-        mlflow.log_metric("avg_knn_role_agreement", avg_knn_agreement)
+        knn_score = sum(knn_agreement)/len(knn_agreement)
+        mlflow.log_metric("avg_knn_role_agreement", knn_score)
+        print(f"Average KNN role agreement: {knn_score:.2f}")
     else:
         print("No KNN agreement data available.")
 
-    # Print output
-    print("Evaluation Metrics:")
-    print(f"Accuracy: {accuracy:.4f}")
-    print("\nClassification Report:")
-    print(classification_report(y_test, y_pred))
-    print("Confusion Matrix:")
-    print(conf_matrix)
-    print("\nMisclassified Player Analysis:")
-    print(f"Average cluster role agreement: {avg_cluster_agreement:.2f}" if cluster_agreement else "No cluster data")
-    print(f"Average KNN role agreement: {avg_knn_agreement:.2f}" if knn_agreement else "No knn data")
+    print(f"\nResults logged to MLflow run: {run.info.run_id}")
