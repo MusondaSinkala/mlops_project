@@ -51,15 +51,28 @@ runs = client.search_runs(experiment.experiment_id, "attributes.status = 'FINISH
 
 model_uri = None
 for run in runs:
-    artifacts = client.list_artifacts(run.info.run_id)
-    if any(art.path == "football_model" for art in artifacts):
-        model_uri = f"runs:/{run.info.run_id}/football_model"
-        break
+    # Option 1: Try listing artifacts (might miss nested or remote ones)
+    try:
+        artifacts = client.list_artifacts(run.info.run_id)
+        if any("football_model" in art.path for art in artifacts):
+            model_uri = f"runs:/{run.info.run_id}/football_model"
+            break
+    except:
+        continue
+
+# Option 2: Try parsing logged models (metadata approach)
+if model_uri is None:
+    for run in runs:
+        try:
+            logged_models = run.data.tags.get("mlflow.log-model.history")
+            if logged_models and "football_model" in logged_models:
+                model_uri = f"runs:/{run.info.run_id}/football_model"
+                break
+        except:
+            continue
 
 if model_uri is None:
-    raise RuntimeError("No run found with football_model artifact")
-
-model = mlflow.sklearn.load_model(model_uri)
+    raise RuntimeError("No run found with 'football_model' artifact")
 
 # Helper to safely parse KNN ID strings
 def parse_knn(knn_str):

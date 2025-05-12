@@ -123,5 +123,5 @@ with mlflow.start_run(log_system_metrics=True):
         artifact_path="football_model",
         signature=signature,
         input_example=X_train,
-        registered_model_name="tracking-quickstart",
+        registered_model_name="football_model",
     )
