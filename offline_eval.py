@@ -51,7 +51,6 @@ runs = client.search_runs(experiment.experiment_id, "attributes.status = 'FINISH
 
 model_uri = None
 for run in runs:
-    for run in runs:
     if "football_model" in run.info.artifact_uri:
         model_uri = f"runs:/{run.info.run_id}/football_model"
         break
