@@ -5,11 +5,7 @@ import ast
 from datetime import datetime
 
 app = Flask(__name__, template_folder = 'templates', static_folder = 'static')
-try:
-    df = pd.read_parquet('final_player_df.parquet', engine='fastparquet')
-except:
-    # Fallback to auto engine if fastparquet fails
-    df = pd.read_parquet('final_player_df.parquet')
+df  = pd.read_csv('final_player_df.csv')
 df.set_index('id', inplace = True)
 
 # Create player name to ID dictionary
@@ -61,4 +57,5 @@ def get_player_id():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
