@@ -16,7 +16,6 @@ statsbomb
 flask
 pyarrow
 
-re
 sklearn
 mlflow == 2.11.1
 ast
