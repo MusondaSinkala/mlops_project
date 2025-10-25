@@ -17,3 +17,4 @@ flask
 
 scikit-learn
 mlflow == 2.11.1
+fastparquet
